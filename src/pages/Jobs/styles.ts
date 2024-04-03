@@ -31,4 +31,5 @@ export const styles = {
     justifyContent: "center",
     margin: "2rem 0rem",
   },
+  jobsPageErrortext: { textAlign: "center", fontSize: "14px", color: "maroon" },
 }

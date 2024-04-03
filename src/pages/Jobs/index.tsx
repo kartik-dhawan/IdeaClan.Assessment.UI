@@ -1,16 +1,26 @@
-import { CircularProgress, Fade, Paper, Stack, Typography } from "@mui/material"
+import {
+  Box,
+  CircularProgress,
+  Fade,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material"
 import DataTable from "../../components/DataTable"
 import { styles } from "./styles"
-import { useCallback, useEffect, useMemo } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchAllJobs } from "../../redux/slices/jobsSlice"
 import { AppDispatch, RootType } from "../../redux/store"
 import { Link } from "react-router-dom"
 import PrimaryButton from "../../components/common/PrimaryButton"
+import { JOBS_BY_API_MOCK } from "../../utils/constants"
 
 export function Jobs() {
   const jid = "jobsPage"
   const dispatch = useDispatch<AppDispatch>()
+
+  const [jobsData, setJobsData] = useState<any[]>([])
 
   const options = useMemo(() => {
     return {
@@ -31,7 +41,7 @@ export function Jobs() {
   // fetches all jobs using API & stores it in redux
   const getJobs = useCallback(() => {
     dispatch(fetchAllJobs(options))
-  }, [dispatch, options])
+  }, [options, dispatch])
 
   useEffect(() => {
     try {
@@ -39,12 +49,20 @@ export function Jobs() {
     } catch (error) {
       console.error(error)
     }
-  })
+  }, [])
 
   // get data, loading & error state from redux
-  const { isLoading, isError } = useSelector(
+  const { isLoading, isError, jobs } = useSelector(
     (state: RootType) => state.jobsSlice,
   )
+
+  useEffect(() => {
+    if (isError) {
+      setJobsData(JOBS_BY_API_MOCK)
+    } else {
+      setJobsData(jobs.byAPI)
+    }
+  }, [isError, jobs])
 
   return (
     <Stack sx={{ margin: 0 }} className={jid}>
@@ -79,12 +97,12 @@ export function Jobs() {
       </Fade>
 
       {/* fade out loader & fade in the data table when we have a result */}
-      <Fade in={!isLoading && !isError}>
+      <Fade in={!isLoading}>
         <Paper
           sx={styles.jobsPageDataTableWrapper}
           className={jid + "DataTableWrapper"}
         >
-          <DataTable />
+          <DataTable jobsData={jobsData} />
         </Paper>
       </Fade>
 
@@ -95,6 +113,13 @@ export function Jobs() {
           <PrimaryButton>Go Back</PrimaryButton>
         </Link>
       </Stack>
+
+      {isError && (
+        <Box sx={styles.jobsPageErrortext}>
+          *The data currently being displayed is static as the rate limit for
+          the free API has been exceeded.
+        </Box>
+      )}
     </Stack>
   )
 }
