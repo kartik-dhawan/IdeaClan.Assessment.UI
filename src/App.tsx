@@ -15,7 +15,7 @@ function App() {
   ])
 
   return (
-    <div className="App">
+    <div className="App" style={{ fontFamily: "Roboto" }}>
       <RouterProvider router={router} />
     </div>
   )
