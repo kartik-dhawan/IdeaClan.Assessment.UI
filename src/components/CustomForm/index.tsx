@@ -120,6 +120,7 @@ export default function CustomForm({ formData, setFormData }: CustomFormProps) {
           onChange={(e) => {
             setInputRecordData(e, "job_apply_link")
           }}
+          value={formData.job_apply_link}
         />
         <FormControlLabel
           control={<Checkbox />}

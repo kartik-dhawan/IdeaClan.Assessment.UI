@@ -1,4 +1,4 @@
-import { Box, Stack } from "@mui/material"
+import { Box, Snackbar, Stack } from "@mui/material"
 import CustomForm from "../components/CustomForm"
 import CustomHeading from "../components/common/CustomHeading"
 import PrimaryButton from "../components/common/PrimaryButton"
@@ -26,6 +26,12 @@ export default function LandingPage() {
 
   const [formData, setFormData] = useState(initialState)
   const [submitDisabled, setSubmitDisabled] = useState(false)
+
+  const [openSnackbar, setOpenSnackbar] = useState(false)
+
+  const toggleSnackbar = () => {
+    setOpenSnackbar((state) => !state)
+  }
 
   // pattern to match a URL
   const urlPattern = /^(http|https):\/\/([\w-]+(\.[\w-]+)+)(\/[\w-./?%&=]*)?$/
@@ -63,6 +69,8 @@ export default function LandingPage() {
           <PrimaryButton
             onClick={() => {
               dispatch(addJobRecords([{ ...formData, job_id: uuid() }]))
+              toggleSnackbar()
+              setFormData(initialState)
             }}
             disabled={submitDisabled}
           >
@@ -73,6 +81,13 @@ export default function LandingPage() {
           </Link>
         </Stack>
       </Stack>
+
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={toggleSnackbar}
+        message="The job has been added to the database."
+      />
     </Box>
   )
 }
