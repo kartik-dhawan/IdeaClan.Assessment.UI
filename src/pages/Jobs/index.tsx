@@ -10,7 +10,7 @@ import {
 } from "../../redux/slices/jobsSlice"
 import { Link } from "react-router-dom"
 import PrimaryButton from "../../components/common/PrimaryButton"
-import { JOBS_BY_API_MOCK } from "../../utils/constants"
+import { JOBS_BY_API_MOCK, RAPID_API_URL } from "../../utils/constants"
 import { AppDispatch, RootType } from "../../redux/interfaces"
 import CustomHeading from "../../components/common/CustomHeading"
 import CustomForm from "../../components/CustomForm"
@@ -19,10 +19,11 @@ export function Jobs() {
   const jid = "jobsPage"
   const dispatch = useDispatch<AppDispatch>()
 
+  // options for the axios request
   const options = useMemo(() => {
     return {
       method: "GET",
-      url: "https://jsearch.p.rapidapi.com/search",
+      url: RAPID_API_URL,
       params: {
         query: "React.js developer in Texas, USA",
         page: "1",
@@ -35,6 +36,7 @@ export function Jobs() {
     }
   }, [])
 
+  // state to manage the edit dialog & the data of the record which we want to edit
   const [openEditDialogData, setOpenEditDialogData] = useState({
     open: false,
     row: {},
@@ -49,6 +51,7 @@ export function Jobs() {
 
   useEffect(() => {
     try {
+      // on first mounting, it tries to fetch the data from the API
       getJobs()
     } catch (error) {
       console.error(error)

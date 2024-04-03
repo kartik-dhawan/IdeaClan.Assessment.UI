@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux"
 import { addJobRecords } from "../redux/slices/jobsSlice"
 import uuid from "react-uuid"
 import { styles } from "./styles"
+import { URL_PATTERN } from "../utils/constants"
 
 export default function LandingPage() {
   const dispatch = useDispatch()
@@ -25,21 +26,21 @@ export default function LandingPage() {
   }
 
   const [formData, setFormData] = useState(initialState)
+
+  // state to manage to disable/enable of the submit button depending on form validation
   const [submitDisabled, setSubmitDisabled] = useState(false)
 
+  // state to manage toggling of snackbar; which is shown when a new Job Record is added to redux.
   const [openSnackbar, setOpenSnackbar] = useState(false)
 
   const toggleSnackbar = () => {
     setOpenSnackbar((state) => !state)
   }
 
-  // pattern to match a URL
-  const urlPattern = /^(http|https):\/\/([\w-]+(\.[\w-]+)+)(\/[\w-./?%&=]*)?$/
-
   useEffect(() => {
     // form validation
     setSubmitDisabled(false)
-    if (!urlPattern.test(formData.job_apply_link ?? "")) {
+    if (!URL_PATTERN.test(formData.job_apply_link ?? "")) {
       setSubmitDisabled(true)
     }
     if (
@@ -82,6 +83,7 @@ export default function LandingPage() {
         </Stack>
       </Stack>
 
+      {/* notification that the new record has been added to the database */}
       <Snackbar
         open={openSnackbar}
         autoHideDuration={6000}

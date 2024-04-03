@@ -31,6 +31,7 @@ export default function DataTable({
 }: DataTableProps) {
   const dispatch = useDispatch()
 
+  // state to manage sort data - eg: by which field we wanna sort & by what order
   const [sortData, setSortData] = useState<SortDataType>({
     key: "employer_name",
     order: true,

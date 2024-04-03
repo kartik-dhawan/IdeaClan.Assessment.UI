@@ -6,6 +6,8 @@ interface CustomHeadingProps {
   subtitle: string
 }
 
+// a common reusable heading component for inhouse project
+
 export default function CustomHeading({ title, subtitle }: CustomHeadingProps) {
   const chid = "customHeading"
 

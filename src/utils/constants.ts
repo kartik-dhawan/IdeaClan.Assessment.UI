@@ -953,3 +953,9 @@ export const JOB_TABLE_HEAD_KEYS = [
     name: "job_is_remote",
   },
 ]
+
+// pattern to match a URL
+export const URL_PATTERN =
+  /^(http|https):\/\/([\w-]+(\.[\w-]+)+)(\/[\w-./?%&=]*)?$/
+
+export const RAPID_API_URL = "https://jsearch.p.rapidapi.com/search"

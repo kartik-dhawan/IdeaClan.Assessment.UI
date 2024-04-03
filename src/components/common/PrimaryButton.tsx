@@ -5,6 +5,7 @@ interface PrimaryButtonProps extends ButtonProps {
   customStyles?: SxProps<Theme>
 }
 
+// a common reusable button component for inhouse project
 export default function PrimaryButton({
   children,
   customStyles,
