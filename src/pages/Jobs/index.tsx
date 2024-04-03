@@ -14,7 +14,6 @@ import { JOBS_BY_API_MOCK } from "../../utils/constants"
 import { AppDispatch, RootType } from "../../redux/interfaces"
 import CustomHeading from "../../components/common/CustomHeading"
 import CustomForm from "../../components/CustomForm"
-import zIndex from "@mui/material/styles/zIndex"
 
 export function Jobs() {
   const jid = "jobsPage"
