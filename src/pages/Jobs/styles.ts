@@ -29,6 +29,6 @@ export const styles = {
   jobsPageButtonGroup: {
     width: "100%",
     justifyContent: "center",
-    margin: "2rem",
+    margin: "2rem 0rem",
   },
 }

@@ -31,7 +31,7 @@ export function Jobs() {
   // fetches all jobs using API & stores it in redux
   const getJobs = useCallback(() => {
     dispatch(fetchAllJobs(options))
-  }, [options])
+  }, [dispatch, options])
 
   useEffect(() => {
     try {
@@ -39,7 +39,7 @@ export function Jobs() {
     } catch (error) {
       console.error(error)
     }
-  }, [options])
+  })
 
   // get data, loading & error state from redux
   const { isLoading, isError } = useSelector(

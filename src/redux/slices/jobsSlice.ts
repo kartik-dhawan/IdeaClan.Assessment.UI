@@ -24,7 +24,7 @@ const initialState: JobsStateType = {
 // redux thunk to directly fetch data using API asynchronously & store it in redux
 export const fetchAllJobs = createAsyncThunk(
   "users/fetchByIdStatus",
-  async (options: any, thunkAPI) => {
+  async (options: any) => {
     const response = await axios.request(options)
     return response.data.data
   },
