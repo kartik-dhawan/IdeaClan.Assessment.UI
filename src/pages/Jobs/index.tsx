@@ -1,13 +1,19 @@
-import { Box, CircularProgress, Fade, Stack, Typography } from "@mui/material"
+import { Box, CircularProgress, Dialog, Fade, Stack } from "@mui/material"
 import DataTable from "../../components/DataTable"
 import { styles } from "./styles"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { addJobRecords, fetchAllJobs } from "../../redux/slices/jobsSlice"
+import {
+  addJobRecords,
+  fetchAllJobs,
+  updateARecord,
+} from "../../redux/slices/jobsSlice"
 import { Link } from "react-router-dom"
 import PrimaryButton from "../../components/common/PrimaryButton"
 import { JOBS_BY_API_MOCK } from "../../utils/constants"
 import { AppDispatch, RootType } from "../../redux/interfaces"
+import CustomHeading from "../../components/common/CustomHeading"
+import CustomForm from "../../components/CustomForm"
 
 export function Jobs() {
   const jid = "jobsPage"
@@ -28,6 +34,13 @@ export function Jobs() {
       },
     }
   }, [])
+
+  const [openEditDialogData, setOpenEditDialogData] = useState({
+    open: false,
+    row: {},
+  })
+
+  const [formData, setFormData] = useState(openEditDialogData.row)
 
   // fetches all jobs using API & stores it in redux
   const getJobs = useCallback(() => {
@@ -54,30 +67,18 @@ export function Jobs() {
     }
   }, [isError])
 
+  useEffect(() => {
+    setFormData(openEditDialogData.row)
+  }, [openEditDialogData])
+
   return (
     <Stack sx={{ margin: "2rem 0rem 5rem" }} className={jid}>
-      <Stack
-        alignItems="center"
-        sx={styles.jobsPageHeadingContainer}
-        className={jid + "HeadingContainer"}
-      >
-        <Typography
-          component="h1"
-          sx={styles.jobsPageTitle}
-          className={jid + "Title"}
-        >
-          Analyze the Jobs Better.
-        </Typography>
-        <Typography
-          component="p"
-          sx={styles.jobsPageSubTitleText}
-          className={jid + "SubTitleText"}
-        >
-          Get data for top Jobs organized for you to start hiring right away.
-          Get data for top Jobs organized for you to start hiring right away.Get
-          data for top Jobs organized for you to start hiring right away.
-        </Typography>
-      </Stack>
+      <CustomHeading
+        title="Analyze the Jobs Better."
+        subtitle="Get data for top Jobs organized for you to start hiring right away. Get
+        data for top Jobs organized for you to start hiring right away.Get data
+        for top Jobs organized for you to start hiring right away."
+      />
 
       {/* display a loader before the API gets the result & thunk is in 'pending' state*/}
       <Fade in={isLoading}>
@@ -92,7 +93,10 @@ export function Jobs() {
           sx={styles.jobsPageDataTableWrapper}
           className={jid + "DataTableWrapper"}
         >
-          <DataTable jobsData={jobs} />
+          <DataTable
+            jobsData={jobs}
+            setOpenEditDialogData={setOpenEditDialogData}
+          />
         </Box>
       </Fade>
 
@@ -111,6 +115,42 @@ export function Jobs() {
           the free API has been exceeded.
         </Box>
       )}
+
+      {/* edit form */}
+      <Dialog
+        open={openEditDialogData.open}
+        sx={{
+          zIndex: 2,
+          width: "100vw",
+
+          "& > .MuiDialog-container": {
+            width: "100vw",
+            "& > .MuiPaper-root": {
+              maxWidth: "100vw !important",
+              width: "900px",
+            },
+          },
+        }}
+        onClose={() => {
+          setOpenEditDialogData({ open: false, row: {} })
+        }}
+      >
+        <Box className="editFormWrap">
+          <CustomForm formData={formData} setFormData={setFormData} />
+        </Box>
+
+        {/* update record button */}
+        <Stack alignItems="center" margin="1rem 0rem">
+          <PrimaryButton
+            onClick={() => {
+              dispatch(updateARecord(formData))
+              setOpenEditDialogData({ open: false, row: {} })
+            }}
+          >
+            Update
+          </PrimaryButton>
+        </Stack>
+      </Dialog>
     </Stack>
   )
 }

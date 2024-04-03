@@ -32,6 +32,19 @@ const jobsSlice = createSlice({
       state.isError = false
       state.isLoading = false
     },
+    updateARecord: (state: JobsStateType, action: PayloadAction<any>) => {
+      const selectedJob = state.jobs.find(
+        (item) => item.job_id === action.payload.job_id,
+      )
+      const editedJob = {
+        ...selectedJob,
+        ...action.payload,
+      }
+      const mutatedState = state.jobs.filter(
+        (item) => item.job_id !== action.payload.job_id,
+      )
+      state.jobs = [...mutatedState, editedJob]
+    },
   },
   extraReducers: (builder) => {
     // reducers success case of API request
@@ -57,6 +70,10 @@ const jobsSlice = createSlice({
   },
 })
 
-export const { addJobRecords, resetJobsState, deleteAJobRecord } =
-  jobsSlice.actions
+export const {
+  addJobRecords,
+  resetJobsState,
+  deleteAJobRecord,
+  updateARecord,
+} = jobsSlice.actions
 export default jobsSlice.reducer
