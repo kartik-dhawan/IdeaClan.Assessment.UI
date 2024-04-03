@@ -16,7 +16,7 @@ export const styles = {
     justifyContent: "center",
     alignItems: "center",
     margin: "1rem 5rem",
-    padding: "1rem 2rem",
+    padding: "8px 16px 32px",
     boxSizing: "border-box",
   },
   jobsPageLoader: {

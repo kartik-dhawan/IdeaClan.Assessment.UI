@@ -56,6 +56,7 @@ export function Jobs() {
     (state: RootType) => state.jobsSlice,
   )
 
+  // use fallback constants data if the API fails
   useEffect(() => {
     if (isError) {
       setJobsData(JOBS_BY_API_MOCK)
@@ -65,7 +66,7 @@ export function Jobs() {
   }, [isError, jobs])
 
   return (
-    <Stack sx={{ margin: 0 }} className={jid}>
+    <Stack sx={{ margin: "2rem 0rem 5rem" }} className={jid}>
       <Stack
         alignItems="center"
         sx={styles.jobsPageHeadingContainer}
@@ -114,6 +115,7 @@ export function Jobs() {
         </Link>
       </Stack>
 
+      {/* API Rate limit exceeding error UI */}
       {isError && (
         <Box sx={styles.jobsPageErrortext}>
           *The data currently being displayed is static as the rate limit for
