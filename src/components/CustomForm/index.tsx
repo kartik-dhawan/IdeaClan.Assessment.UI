@@ -12,7 +12,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material"
-import { useState } from "react"
+import { useCallback, useState } from "react"
 
 interface CustomFormProps {
   formData: any
@@ -23,13 +23,16 @@ export default function CustomForm({ formData, setFormData }: CustomFormProps) {
   const [TAndC, setTAndC] = useState(false)
   const [hasApplicationLink, setHasApplicationLink] = useState(false)
 
-  const setInputRecordData = (e: any, field: string) => {
-    e.preventDefault()
-    setFormData({
-      ...formData,
-      [field]: e.target.value,
-    })
-  }
+  const setInputRecordData = useCallback(
+    (e: any, field: string) => {
+      e.preventDefault()
+      setFormData({
+        ...formData,
+        [field]: e.target.value,
+      })
+    },
+    [formData],
+  )
 
   return (
     <Paper sx={{ width: "100%", flex: 1, padding: "2rem", zIndex: 9 }}>

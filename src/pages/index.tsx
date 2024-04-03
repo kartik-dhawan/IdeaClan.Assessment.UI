@@ -3,7 +3,7 @@ import CustomForm from "../components/CustomForm"
 import CustomHeading from "../components/common/CustomHeading"
 import PrimaryButton from "../components/common/PrimaryButton"
 import { Link } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { addJobRecords } from "../redux/slices/jobsSlice"
 import uuid from "react-uuid"
@@ -33,9 +33,9 @@ export default function LandingPage() {
   // state to manage toggling of snackbar; which is shown when a new Job Record is added to redux.
   const [openSnackbar, setOpenSnackbar] = useState(false)
 
-  const toggleSnackbar = () => {
+  const toggleSnackbar = useCallback(() => {
     setOpenSnackbar((state) => !state)
-  }
+  }, [])
 
   useEffect(() => {
     // form validation

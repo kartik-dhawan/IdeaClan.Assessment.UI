@@ -16,7 +16,7 @@ import { styles } from "./styles"
 import { JOB_TABLE_HEAD_KEYS } from "../../utils/constants"
 import { useDispatch } from "react-redux"
 import { deleteAJobRecord } from "../../redux/slices/jobsSlice"
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react"
 import { SortDataType } from "../../utils/interfaces"
 import { sortArrayOfObjects } from "../../utils/methods"
 
@@ -41,10 +41,13 @@ export default function DataTable({
   const [mutatedJobsData, setMutatedJobsData] = useState<any[]>([])
 
   // sort data before displaying on UI
+  const arr = useMemo(() => {
+    return sortArrayOfObjects(jobsData, sortData)
+  }, [jobsData, sortData])
+
   useEffect(() => {
-    const arr = sortArrayOfObjects(jobsData, sortData)
     setMutatedJobsData(arr)
-  }, [sortData, jobsData])
+  }, [arr])
 
   return (
     <Paper sx={{ width: "100%", backgroundColor: "#fefefe" }}>
