@@ -8,6 +8,7 @@ import { Link } from "react-router-dom"
 import PrimaryButton from "../../components/common/PrimaryButton"
 import { JOBS_BY_API_MOCK } from "../../utils/constants"
 import { AppDispatch, RootType } from "../../redux/interfaces"
+import CustomHeading from "../../components/common/CustomHeading"
 
 export function Jobs() {
   const jid = "jobsPage"
@@ -56,28 +57,12 @@ export function Jobs() {
 
   return (
     <Stack sx={{ margin: "2rem 0rem 5rem" }} className={jid}>
-      <Stack
-        alignItems="center"
-        sx={styles.jobsPageHeadingContainer}
-        className={jid + "HeadingContainer"}
-      >
-        <Typography
-          component="h1"
-          sx={styles.jobsPageTitle}
-          className={jid + "Title"}
-        >
-          Analyze the Jobs Better.
-        </Typography>
-        <Typography
-          component="p"
-          sx={styles.jobsPageSubTitleText}
-          className={jid + "SubTitleText"}
-        >
-          Get data for top Jobs organized for you to start hiring right away.
-          Get data for top Jobs organized for you to start hiring right away.Get
-          data for top Jobs organized for you to start hiring right away.
-        </Typography>
-      </Stack>
+      <CustomHeading
+        title="Analyze the Jobs Better."
+        subtitle="Get data for top Jobs organized for you to start hiring right away. Get
+        data for top Jobs organized for you to start hiring right away.Get data
+        for top Jobs organized for you to start hiring right away."
+      />
 
       {/* display a loader before the API gets the result & thunk is in 'pending' state*/}
       <Fade in={isLoading}>
