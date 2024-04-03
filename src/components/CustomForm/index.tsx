@@ -2,6 +2,7 @@ import {
   Checkbox,
   FormControl,
   FormControlLabel,
+  FormLabel,
   InputLabel,
   MenuItem,
   Paper,
@@ -13,18 +14,12 @@ import {
 } from "@mui/material"
 import { useEffect, useState } from "react"
 
-export default function CustomForm() {
-  const initialState = {
-    job_id: "",
-    job_title: "",
-    employer_name: "",
-    job_city: "",
-    job_min_salary: 0,
-    job_max_salary: 0,
-    job_is_remote: false,
-  }
+interface CustomFormProps {
+  formData: any
+  setFormData: any
+}
 
-  const [formData, setFormData] = useState(initialState)
+export default function CustomForm({ formData, setFormData }: CustomFormProps) {
   const [TAndC, setTAndC] = useState(false)
   const [hasApplicationLink, setHasApplicationLink] = useState(false)
 
@@ -50,6 +45,8 @@ export default function CustomForm() {
           onChange={(e) => {
             setInputRecordData(e, "job_title")
           }}
+          value={formData.job_title}
+          required
         />
         <TextField
           label="Min. Salary"
@@ -58,6 +55,7 @@ export default function CustomForm() {
           onChange={(e) => {
             setInputRecordData(e, "job_min_salary")
           }}
+          value={formData.job_min_salary}
         />
         <TextField
           label="Max. Salary"
@@ -66,6 +64,7 @@ export default function CustomForm() {
           onChange={(e) => {
             setInputRecordData(e, "job_max_salary")
           }}
+          value={formData.job_max_salary}
         />
         <TextField
           label="City"
@@ -73,6 +72,8 @@ export default function CustomForm() {
           onChange={(e) => {
             setInputRecordData(e, "job_city")
           }}
+          value={formData.job_city}
+          required
         />
         <TextField
           label="Company"
@@ -80,6 +81,8 @@ export default function CustomForm() {
           onChange={(e) => {
             setInputRecordData(e, "employer_name")
           }}
+          value={formData.employer_name}
+          required
         />
         <FormControl>
           <InputLabel>Got Application Link?</InputLabel>
@@ -91,24 +94,32 @@ export default function CustomForm() {
               setHasApplicationLink(e.target.value == 1 ? true : false)
             }}
             defaultValue={0}
+            value={hasApplicationLink ? 1 : 0}
           >
             <MenuItem value={1}>Yes</MenuItem>
             <MenuItem value={0}>No</MenuItem>
           </Select>
         </FormControl>
-        <RadioGroup
-          defaultValue="false"
-          onChange={(e) => {
-            setInputRecordData(e, "job_is_remote")
-          }}
-        >
-          <FormControlLabel value={true} control={<Radio />} label="True" />
-          <FormControlLabel value={false} control={<Radio />} label="False" />
-        </RadioGroup>
+        <FormControl>
+          <FormLabel>Is the job remote?</FormLabel>
+          <RadioGroup
+            defaultValue="false"
+            onChange={(e) => {
+              setInputRecordData(e, "job_is_remote")
+            }}
+            value={formData.job_is_remote}
+          >
+            <FormControlLabel value={true} control={<Radio />} label="True" />
+            <FormControlLabel value={false} control={<Radio />} label="False" />
+          </RadioGroup>
+        </FormControl>
         <TextField
           label="Application Link"
           sx={{ minWidth: "100%" }}
           disabled={!hasApplicationLink}
+          onChange={(e) => {
+            setInputRecordData(e, "job_apply_link")
+          }}
         />
         <FormControlLabel
           control={<Checkbox />}
