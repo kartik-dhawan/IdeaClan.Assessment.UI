@@ -920,3 +920,36 @@ export const JOBS_BY_API_MOCK = [
     job_onet_job_zone: "3",
   },
 ]
+
+export const JOB_TABLE_HEAD_KEYS = [
+  {
+    id: 1,
+    label: "Job Title",
+    name: "job_title",
+  },
+  {
+    id: 2,
+    label: "Company",
+    name: "employer_name",
+  },
+  {
+    id: 3,
+    label: "City",
+    name: "job_city",
+  },
+  {
+    id: 4,
+    label: "Min. Salary",
+    name: "job_min_salary",
+  },
+  {
+    id: 5,
+    label: "Max. Salary",
+    name: "job_max_salary",
+  },
+  {
+    id: 6,
+    label: "Remote (Y/N)",
+    name: "job_is_remote",
+  },
+]

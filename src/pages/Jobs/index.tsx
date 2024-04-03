@@ -1,11 +1,4 @@
-import {
-  Box,
-  CircularProgress,
-  Fade,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material"
+import { Box, CircularProgress, Fade, Stack, Typography } from "@mui/material"
 import DataTable from "../../components/DataTable"
 import { styles } from "./styles"
 import { useCallback, useEffect, useMemo, useState } from "react"
@@ -99,12 +92,12 @@ export function Jobs() {
 
       {/* fade out loader & fade in the data table when we have a result */}
       <Fade in={!isLoading}>
-        <Paper
+        <Box
           sx={styles.jobsPageDataTableWrapper}
           className={jid + "DataTableWrapper"}
         >
           <DataTable jobsData={jobsData} />
-        </Paper>
+        </Box>
       </Fade>
 
       {/* buttons to reset the redux state & refetch the data */}

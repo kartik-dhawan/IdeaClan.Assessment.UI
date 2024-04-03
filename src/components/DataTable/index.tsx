@@ -1,5 +1,5 @@
 import {
-  Box,
+  Paper,
   Table,
   TableBody,
   TableCell,
@@ -11,52 +11,20 @@ import PrimaryButton from "../common/PrimaryButton"
 import { Link } from "react-router-dom"
 import EditIcon from "@mui/icons-material/Edit"
 import DeleteIcon from "@mui/icons-material/Delete"
+import { styles } from "./styles"
+import { JOB_TABLE_HEAD_KEYS } from "../../utils/constants"
 
 interface DataTableProps {
   jobsData: any[]
 }
 
 export default function DataTable({ jobsData }: DataTableProps) {
-  const tableHeadKeys = [
-    {
-      id: 0,
-      label: "ID",
-      name: "job_id",
-    },
-    {
-      id: 1,
-      label: "Job Title",
-      name: "job_title",
-    },
-    {
-      id: 2,
-      label: "Company",
-      name: "employer_name",
-    },
-    {
-      id: 3,
-      label: "City",
-      name: "job_city",
-    },
-    {
-      id: 4,
-      label: "Min. Salary",
-      name: "job_min_salary",
-    },
-    {
-      id: 5,
-      label: "Max. Salary",
-      name: "job_max_salary",
-    },
-  ]
-  console.log(tableHeadKeys)
-
   return (
-    <Box sx={{ width: "100%", backgroundColor: "#fefefe" }}>
-      <TableContainer>
+    <Paper sx={{ width: "100%", backgroundColor: "#fefefe" }}>
+      <TableContainer sx={{ borderRadius: "8px" }}>
         <Table>
-          <TableHead>
-            {tableHeadKeys.map((item) => {
+          <TableHead sx={styles.dataTableHeadingCells}>
+            {JOB_TABLE_HEAD_KEYS.map((item) => {
               return <TableCell key={item.id}>{item.label}</TableCell>
             })}
             <TableCell>-</TableCell>
@@ -66,46 +34,31 @@ export default function DataTable({ jobsData }: DataTableProps) {
             {jobsData.map((row) => {
               return (
                 <TableRow key={row.job_id}>
-                  {tableHeadKeys.map((item) => {
-                    return <TableCell key={item.id}>{row[item.name]}</TableCell>
+                  {JOB_TABLE_HEAD_KEYS.map((item) => {
+                    return (
+                      <TableCell key={item.id}>
+                        {typeof row[item.name] === "boolean"
+                          ? row[item.name]
+                            ? "Y"
+                            : "N"
+                          : row[item.name]
+                            ? row[item.name]
+                            : "-"}
+                      </TableCell>
+                    )
                   })}
                   <TableCell>
                     <Link to={row.job_apply_link} target="_blank">
-                      <PrimaryButton
-                        customStyles={{
-                          fontSize: "12px !important",
-                          padding: "4px 8px",
-                        }}
-                      >
+                      <PrimaryButton customStyles={styles.dataTableApplyBtn}>
                         Apply
                       </PrimaryButton>
                     </Link>
                   </TableCell>
                   <TableCell sx={{ display: "flex" }}>
-                    <PrimaryButton
-                      customStyles={{
-                        fontSize: "12px !important",
-                        backgroundColor: "transparent",
-                        color: "#000",
-                        "&:hover": {
-                          backgroundColor: "transparent",
-                          color: "#000",
-                        },
-                      }}
-                    >
+                    <PrimaryButton customStyles={styles.dataTableIconButtons}>
                       <EditIcon />
                     </PrimaryButton>
-                    <PrimaryButton
-                      customStyles={{
-                        fontSize: "12px !important",
-                        backgroundColor: "transparent",
-                        color: "#000",
-                        "&:hover": {
-                          backgroundColor: "transparent",
-                          color: "#000",
-                        },
-                      }}
-                    >
+                    <PrimaryButton customStyles={styles.dataTableIconButtons}>
                       <DeleteIcon />
                     </PrimaryButton>
                   </TableCell>
@@ -115,6 +68,6 @@ export default function DataTable({ jobsData }: DataTableProps) {
           </TableBody>
         </Table>
       </TableContainer>
-    </Box>
+    </Paper>
   )
 }
