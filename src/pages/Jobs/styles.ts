@@ -19,4 +19,16 @@ export const styles = {
     padding: "1rem 2rem",
     boxSizing: "border-box",
   },
+  jobsPageLoader: {
+    color: "#000",
+    "& svg": {
+      height: "24px",
+      width: "24px",
+    },
+  },
+  jobsPageButtonGroup: {
+    width: "100%",
+    justifyContent: "center",
+    margin: "2rem",
+  },
 }
