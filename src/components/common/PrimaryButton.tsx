@@ -1,11 +1,13 @@
-import { Button, ButtonProps } from "@mui/material"
+import { Button, ButtonProps, SxProps, Theme } from "@mui/material"
 
 interface PrimaryButtonProps extends ButtonProps {
   children: JSX.Element | string
+  customStyles?: SxProps<Theme>
 }
 
 export default function PrimaryButton({
   children,
+  customStyles,
   ...rest
 }: PrimaryButtonProps) {
   return (
@@ -24,6 +26,7 @@ export default function PrimaryButton({
         "&:hover": {
           backgroundColor: "#444",
         },
+        ...customStyles,
       }}
     >
       {children}

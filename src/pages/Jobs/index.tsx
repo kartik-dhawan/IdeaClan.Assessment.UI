@@ -1,26 +1,17 @@
-import {
-  Box,
-  CircularProgress,
-  Fade,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material"
+import { Box, CircularProgress, Fade, Stack, Typography } from "@mui/material"
 import DataTable from "../../components/DataTable"
 import { styles } from "./styles"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchAllJobs } from "../../redux/slices/jobsSlice"
-import { AppDispatch, RootType } from "../../redux/store"
+import { addJobRecords, fetchAllJobs } from "../../redux/slices/jobsSlice"
 import { Link } from "react-router-dom"
 import PrimaryButton from "../../components/common/PrimaryButton"
 import { JOBS_BY_API_MOCK } from "../../utils/constants"
+import { AppDispatch, RootType } from "../../redux/interfaces"
 
 export function Jobs() {
   const jid = "jobsPage"
   const dispatch = useDispatch<AppDispatch>()
-
-  const [jobsData, setJobsData] = useState<any[]>([])
 
   const options = useMemo(() => {
     return {
@@ -56,16 +47,15 @@ export function Jobs() {
     (state: RootType) => state.jobsSlice,
   )
 
+  // use fallback constants data if the API fails
   useEffect(() => {
     if (isError) {
-      setJobsData(JOBS_BY_API_MOCK)
-    } else {
-      setJobsData(jobs.byAPI)
+      dispatch(addJobRecords(JOBS_BY_API_MOCK))
     }
-  }, [isError, jobs])
+  }, [isError])
 
   return (
-    <Stack sx={{ margin: 0 }} className={jid}>
+    <Stack sx={{ margin: "2rem 0rem 5rem" }} className={jid}>
       <Stack
         alignItems="center"
         sx={styles.jobsPageHeadingContainer}
@@ -98,12 +88,12 @@ export function Jobs() {
 
       {/* fade out loader & fade in the data table when we have a result */}
       <Fade in={!isLoading}>
-        <Paper
+        <Box
           sx={styles.jobsPageDataTableWrapper}
           className={jid + "DataTableWrapper"}
         >
-          <DataTable jobsData={jobsData} />
-        </Paper>
+          <DataTable jobsData={jobs} />
+        </Box>
       </Fade>
 
       {/* buttons to reset the redux state & refetch the data */}
@@ -114,6 +104,7 @@ export function Jobs() {
         </Link>
       </Stack>
 
+      {/* API Rate limit exceeding error UI */}
       {isError && (
         <Box sx={styles.jobsPageErrortext}>
           *The data currently being displayed is static as the rate limit for
