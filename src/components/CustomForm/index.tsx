@@ -12,7 +12,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 interface CustomFormProps {
   formData: any
@@ -20,7 +20,6 @@ interface CustomFormProps {
 }
 
 export default function CustomForm({ formData, setFormData }: CustomFormProps) {
-  console.log(formData)
   const [TAndC, setTAndC] = useState(false)
   const [hasApplicationLink, setHasApplicationLink] = useState(false)
 
