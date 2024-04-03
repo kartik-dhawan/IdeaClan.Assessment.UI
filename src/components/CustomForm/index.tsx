@@ -32,7 +32,7 @@ export default function CustomForm({ formData, setFormData }: CustomFormProps) {
   }
 
   return (
-    <Paper sx={{ width: "100%", flex: 1, padding: "2rem ", zIndex: 99999999 }}>
+    <Paper sx={{ width: "100%", flex: 1, padding: "2rem", zIndex: 9 }}>
       <Stack gap={2} flexDirection="row" flexWrap="wrap">
         <TextField
           label="Job Title"

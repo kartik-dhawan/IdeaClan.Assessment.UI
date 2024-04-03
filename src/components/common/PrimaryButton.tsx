@@ -27,6 +27,10 @@ export default function PrimaryButton({
         "&:hover": {
           backgroundColor: "#444",
         },
+        "&.Mui-disabled": {
+          color: "#ccc",
+          backgroundColor: "#888",
+        },
         ...customStyles,
       }}
     >
