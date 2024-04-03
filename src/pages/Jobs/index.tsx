@@ -11,10 +11,10 @@ import { styles } from "./styles"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchAllJobs } from "../../redux/slices/jobsSlice"
-import { AppDispatch, RootType } from "../../redux/store"
 import { Link } from "react-router-dom"
 import PrimaryButton from "../../components/common/PrimaryButton"
 import { JOBS_BY_API_MOCK } from "../../utils/constants"
+import { AppDispatch, RootType } from "../../redux/interfaces"
 
 export function Jobs() {
   const jid = "jobsPage"

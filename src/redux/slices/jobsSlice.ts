@@ -1,16 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
-
-type JobsBySource = {
-  byAPI: any[]
-  byUser: any[]
-}
-
-interface JobsStateType {
-  jobs: JobsBySource
-  isLoading: boolean
-  isError: boolean
-}
+import { JobsStateType } from "../interfaces"
 
 const initialState: JobsStateType = {
   jobs: {
