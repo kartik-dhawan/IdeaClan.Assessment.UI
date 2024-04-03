@@ -3,7 +3,7 @@ import DataTable from "../../components/DataTable"
 import { styles } from "./styles"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchAllJobs } from "../../redux/slices/jobsSlice"
+import { addJobRecords, fetchAllJobs } from "../../redux/slices/jobsSlice"
 import { Link } from "react-router-dom"
 import PrimaryButton from "../../components/common/PrimaryButton"
 import { JOBS_BY_API_MOCK } from "../../utils/constants"
@@ -12,8 +12,6 @@ import { AppDispatch, RootType } from "../../redux/interfaces"
 export function Jobs() {
   const jid = "jobsPage"
   const dispatch = useDispatch<AppDispatch>()
-
-  const [jobsData, setJobsData] = useState<any[]>([])
 
   const options = useMemo(() => {
     return {
@@ -52,11 +50,9 @@ export function Jobs() {
   // use fallback constants data if the API fails
   useEffect(() => {
     if (isError) {
-      setJobsData(JOBS_BY_API_MOCK)
-    } else {
-      setJobsData(jobs.byAPI)
+      dispatch(addJobRecords(JOBS_BY_API_MOCK))
     }
-  }, [isError, jobs])
+  }, [isError])
 
   return (
     <Stack sx={{ margin: "2rem 0rem 5rem" }} className={jid}>
@@ -96,7 +92,7 @@ export function Jobs() {
           sx={styles.jobsPageDataTableWrapper}
           className={jid + "DataTableWrapper"}
         >
-          <DataTable jobsData={jobsData} />
+          <DataTable jobsData={jobs} />
         </Box>
       </Fade>
 

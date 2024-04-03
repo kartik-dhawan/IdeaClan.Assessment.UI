@@ -5,13 +5,8 @@ export type AppDispatch = typeof store.dispatch
 
 // Jobs Slice
 
-export type JobsBySource = {
-  byAPI: any[]
-  byUser: any[]
-}
-
 export interface JobsStateType {
-  jobs: JobsBySource
+  jobs: any[]
   isLoading: boolean
   isError: boolean
 }

@@ -13,8 +13,17 @@ export const styles = {
     padding: "4px 8px",
   },
   dataTableHeadingCells: {
+    position: "sticky",
+    top: 0,
+    zIndex: 100000,
     backgroundColor: "#000",
     "& th": { color: "#d9d9d9", fontSize: "16px", fontWeight: 400 },
   },
+  dataTableContainer: {
+    borderRadius: "8px",
+    maxHeight: "600px",
+    position: "relative",
+  },
+  // dataTable
   // dataTable
 }

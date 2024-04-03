@@ -3,10 +3,7 @@ import axios from "axios"
 import { JobsStateType } from "../interfaces"
 
 const initialState: JobsStateType = {
-  jobs: {
-    byAPI: [],
-    byUser: [],
-  },
+  jobs: [],
   isLoading: false,
   isError: false,
 }
@@ -24,8 +21,14 @@ const jobsSlice = createSlice({
   name: "Jobs",
   initialState,
   reducers: {
+    addJobRecords: (state: JobsStateType, action: PayloadAction<any[]>) => {
+      state.jobs = [...state.jobs, ...action.payload]
+    },
+    deleteAJobRecord: (state: JobsStateType, action: PayloadAction<string>) => {
+      state.jobs = state.jobs.filter((item) => item.job_id !== action.payload)
+    },
     resetJobsState: (state: JobsStateType) => {
-      state.jobs.byAPI = []
+      state.jobs = []
       state.isError = false
       state.isLoading = false
     },
@@ -36,7 +39,7 @@ const jobsSlice = createSlice({
       fetchAllJobs.fulfilled,
       (state: JobsStateType, action: PayloadAction<any>) => {
         // Add user to the state array
-        state.jobs.byAPI = action.payload
+        state.jobs = action.payload
         state.isLoading = false
       },
     )
@@ -54,5 +57,6 @@ const jobsSlice = createSlice({
   },
 })
 
-export const { resetJobsState } = jobsSlice.actions
+export const { addJobRecords, resetJobsState, deleteAJobRecord } =
+  jobsSlice.actions
 export default jobsSlice.reducer

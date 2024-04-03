@@ -13,22 +13,28 @@ import EditIcon from "@mui/icons-material/Edit"
 import DeleteIcon from "@mui/icons-material/Delete"
 import { styles } from "./styles"
 import { JOB_TABLE_HEAD_KEYS } from "../../utils/constants"
+import { useDispatch } from "react-redux"
+import { deleteAJobRecord } from "../../redux/slices/jobsSlice"
 
 interface DataTableProps {
   jobsData: any[]
 }
 
 export default function DataTable({ jobsData }: DataTableProps) {
+  const dispatch = useDispatch()
+
   return (
     <Paper sx={{ width: "100%", backgroundColor: "#fefefe" }}>
-      <TableContainer sx={{ borderRadius: "8px" }}>
+      <TableContainer sx={styles.dataTableContainer}>
         <Table>
           <TableHead sx={styles.dataTableHeadingCells}>
-            {JOB_TABLE_HEAD_KEYS.map((item) => {
-              return <TableCell key={item.id}>{item.label}</TableCell>
-            })}
-            <TableCell>-</TableCell>
-            <TableCell>-</TableCell>
+            <TableRow>
+              {JOB_TABLE_HEAD_KEYS.map((item) => {
+                return <TableCell key={item.id}>{item.label}</TableCell>
+              })}
+              <TableCell>-</TableCell>
+              <TableCell>-</TableCell>
+            </TableRow>
           </TableHead>
           <TableBody>
             {jobsData.map((row) => {
@@ -58,7 +64,12 @@ export default function DataTable({ jobsData }: DataTableProps) {
                     <PrimaryButton customStyles={styles.dataTableIconButtons}>
                       <EditIcon />
                     </PrimaryButton>
-                    <PrimaryButton customStyles={styles.dataTableIconButtons}>
+                    <PrimaryButton
+                      customStyles={styles.dataTableIconButtons}
+                      onClick={() => {
+                        dispatch(deleteAJobRecord(row.job_id))
+                      }}
+                    >
                       <DeleteIcon />
                     </PrimaryButton>
                   </TableCell>
