@@ -16,15 +16,19 @@ import { styles } from "./styles"
 import { JOB_TABLE_HEAD_KEYS } from "../../utils/constants"
 import { useDispatch } from "react-redux"
 import { deleteAJobRecord } from "../../redux/slices/jobsSlice"
-import { useEffect, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { SortDataType } from "../../utils/interfaces"
 import { sortArrayOfObjects } from "../../utils/methods"
 
 interface DataTableProps {
   jobsData: any[]
+  setOpenEditDialogData: Dispatch<SetStateAction<any>>
 }
 
-export default function DataTable({ jobsData }: DataTableProps) {
+export default function DataTable({
+  jobsData,
+  setOpenEditDialogData,
+}: DataTableProps) {
   const dispatch = useDispatch()
 
   const [sortData, setSortData] = useState<SortDataType>({
@@ -101,7 +105,12 @@ export default function DataTable({ jobsData }: DataTableProps) {
                     </Link>
                   </TableCell>
                   <TableCell sx={{ display: "flex" }}>
-                    <PrimaryButton customStyles={styles.dataTableIconButtons}>
+                    <PrimaryButton
+                      customStyles={styles.dataTableIconButtons}
+                      onClick={() => {
+                        setOpenEditDialogData({ open: true, row })
+                      }}
+                    >
                       <EditIcon />
                     </PrimaryButton>
                     <PrimaryButton

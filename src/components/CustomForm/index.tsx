@@ -20,6 +20,7 @@ interface CustomFormProps {
 }
 
 export default function CustomForm({ formData, setFormData }: CustomFormProps) {
+  console.log(formData)
   const [TAndC, setTAndC] = useState(false)
   const [hasApplicationLink, setHasApplicationLink] = useState(false)
 
@@ -31,13 +32,8 @@ export default function CustomForm({ formData, setFormData }: CustomFormProps) {
     })
   }
 
-  useEffect(() => {
-    console.log(formData)
-    console.log(hasApplicationLink)
-  }, [formData, hasApplicationLink])
-
   return (
-    <Paper sx={{ width: "100%", flex: 1, padding: "2rem " }}>
+    <Paper sx={{ width: "100%", flex: 1, padding: "2rem ", zIndex: 99999999 }}>
       <Stack gap={2} flexDirection="row" flexWrap="wrap">
         <TextField
           label="Job Title"
@@ -115,7 +111,7 @@ export default function CustomForm({ formData, setFormData }: CustomFormProps) {
         </FormControl>
         <TextField
           label="Application Link"
-          sx={{ minWidth: "100%" }}
+          sx={{ minWidth: "80%" }}
           disabled={!hasApplicationLink}
           onChange={(e) => {
             setInputRecordData(e, "job_apply_link")

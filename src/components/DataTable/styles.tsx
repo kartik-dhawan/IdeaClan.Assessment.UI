@@ -15,7 +15,7 @@ export const styles = {
   dataTableHeadingCells: {
     position: "sticky",
     top: 0,
-    zIndex: 100000,
+    zIndex: 1,
     backgroundColor: "#000",
     "& th": {
       color: "#d9d9d9",
