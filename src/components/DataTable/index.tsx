@@ -6,6 +6,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TableSortLabel,
 } from "@mui/material"
 import PrimaryButton from "../common/PrimaryButton"
 import { Link } from "react-router-dom"
@@ -15,6 +16,9 @@ import { styles } from "./styles"
 import { JOB_TABLE_HEAD_KEYS } from "../../utils/constants"
 import { useDispatch } from "react-redux"
 import { deleteAJobRecord } from "../../redux/slices/jobsSlice"
+import { useEffect, useState } from "react"
+import { SortDataType } from "../../utils/interfaces"
+import { sortArrayOfObjects } from "../../utils/methods"
 
 interface DataTableProps {
   jobsData: any[]
@@ -23,6 +27,20 @@ interface DataTableProps {
 export default function DataTable({ jobsData }: DataTableProps) {
   const dispatch = useDispatch()
 
+  const [sortData, setSortData] = useState<SortDataType>({
+    key: "employer_name",
+    order: true,
+  }) // true - asc, false - desc
+
+  // final state for sorted data
+  const [mutatedJobsData, setMutatedJobsData] = useState<any[]>([])
+
+  // sort data before displaying on UI
+  useEffect(() => {
+    const arr = sortArrayOfObjects(jobsData, sortData)
+    setMutatedJobsData(arr)
+  }, [sortData, jobsData])
+
   return (
     <Paper sx={{ width: "100%", backgroundColor: "#fefefe" }}>
       <TableContainer sx={styles.dataTableContainer}>
@@ -30,14 +48,36 @@ export default function DataTable({ jobsData }: DataTableProps) {
           <TableHead sx={styles.dataTableHeadingCells}>
             <TableRow>
               {JOB_TABLE_HEAD_KEYS.map((item) => {
-                return <TableCell key={item.id}>{item.label}</TableCell>
+                return (
+                  <TableCell
+                    key={item.id}
+                    onClick={() => {
+                      setSortData((state) => {
+                        return {
+                          key: item.name,
+                          order: !state.order,
+                        }
+                      })
+                    }}
+                  >
+                    <TableSortLabel
+                      direction={
+                        sortData.key === item.name && sortData.order
+                          ? "asc"
+                          : "desc"
+                      }
+                    >
+                      {item.label}
+                    </TableSortLabel>
+                  </TableCell>
+                )
               })}
               <TableCell>-</TableCell>
               <TableCell>-</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {jobsData.map((row) => {
+            {mutatedJobsData.map((row) => {
               return (
                 <TableRow key={row.job_id}>
                   {JOB_TABLE_HEAD_KEYS.map((item) => {

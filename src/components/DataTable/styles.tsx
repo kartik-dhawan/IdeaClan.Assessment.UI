@@ -17,7 +17,17 @@ export const styles = {
     top: 0,
     zIndex: 100000,
     backgroundColor: "#000",
-    "& th": { color: "#d9d9d9", fontSize: "16px", fontWeight: 400 },
+    "& th": {
+      color: "#d9d9d9",
+      fontSize: "16px",
+      fontWeight: 400,
+      "& span": {
+        color: "#fefefe !important",
+        "&:hover": {
+          color: "#fefefe !important",
+        },
+      },
+    },
   },
   dataTableContainer: {
     borderRadius: "8px",

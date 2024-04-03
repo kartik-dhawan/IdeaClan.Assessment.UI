@@ -1,5 +1,4 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import axios from "axios"
+import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { JobsStateType } from "../interfaces"
 
 const initialState: JobsStateType = {
